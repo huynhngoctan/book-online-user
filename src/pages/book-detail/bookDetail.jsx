@@ -5,11 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './bookDetail.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { cartQuantityContext } from '~/App';
+import { Link } from 'react-router-dom';
 
 const BookDetail = () => {
   const {bookID} = useParams();
   const url = `http://localhost:8080/api/v1/products/${bookID}`;
   const [book, setBook] = useState({});
+  const [news, setNews] = useState([]);
 
   //context
   const {addBookToCart} = useContext(cartQuantityContext);
@@ -21,6 +23,15 @@ const BookDetail = () => {
             console.log(res.data.data)
             setBook(res.data.data);
            
+        })
+        .catch(err => {
+            console.log(err)
+        });
+
+        axios
+        .get('http://localhost:8080/api/v1/products' + "/news").then(res => {
+            console.log(res);
+            setNews(res.data.data);
         })
         .catch(err => {
             console.log(err)
@@ -76,28 +87,33 @@ const BookDetail = () => {
             </div>
           </div>
         </div>
-        <div style={{marginTop: '100px'}}>
-          <div className="container mt-5">
-            <div className="row">
-              <div className="col-sm-4">
-                <h2>Sách mới</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container mt-5">
-          <div className="row">
-            <div className="col-sm-2">
-              <div className="card" style={{width: '200px'}}>
-                <img className="card-img-top" src="../bootstrap4/img_avatar1.png" alt="Card image" style={{width: '100%'}} />
-                <div className="card-body">
-                  <h4 className="card-title">John Doe</h4>
-                  <a href="#" className="btn btn-primary">See Profile</a>
+        <div style={{marginTop: '50px'}}>
+            <div className="container mt-5">
+              <div className="row">
+                <div className="col-sm-4">
+                  <h2>New Coming</h2>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+         
+          <div className="container">
+            <div className="row">
+            {news.map(item => (
+              <div key={item.id} className="col-sm-2" style={{marginBottom: '30px'}}>
+                <div className="card" style={{width: '180px'}}>
+                  <Link to={'/books/' + item.id}>
+                    <img className="card-img-top" src={item.linkImage} style={{width: '100%', height: '250px', objectFit: 'cover'}} />
+                  </Link>
+                  <div className="card-body" style={{textAlign: 'center'}}>
+                    <h4 className="card-title" style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{item.name}</h4>
+                    <a onClick={() => addBookToCart(item.id, item)} className="btn btn-primary">Add to Cart</a>
+                  </div>
+                </div>
+              </div>
+              ))}
+            </div>
+          </div>
       </div>
       
     );

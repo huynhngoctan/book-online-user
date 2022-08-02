@@ -115,7 +115,7 @@ const CheckPassword = () => {
                     <div className="card-body p-md-5">
                         <div className="row justify-content-center">
                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create new password</p>
                             <form className="mx-1 mx-md-4" onSubmit={handleSubmit}>
                         
                             <div className="d-flex flex-row align-items-center mb-4">
@@ -138,7 +138,7 @@ const CheckPassword = () => {
                             </div>
                 
                             <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                <button type="submit" className="btn btn-primary btn-lg custom-button">Register</button>
+                                <button type="submit" className="btn btn-primary btn-lg custom-button">Submit</button>
                             </div>
                             </form>
                         </div>
